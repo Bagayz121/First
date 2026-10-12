@@ -47,6 +47,18 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
     var value2 by remember { mutableStateOf("") }
     var result by remember { mutableStateOf("") }
 
+    // Динамические подписи полей в зависимости от выбранного варианта
+    val label1 = when (variant) {
+        "1" -> "Сторона a"
+        "2" -> "Диагональ d1"
+        else -> "Значение 1"
+    }
+    val label2 = when (variant) {
+        "1" -> "Высота h"
+        "2" -> "Диагональ d2"
+        else -> "Значение 2"
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -70,14 +82,14 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = value1,
             onValueChange = { value1 = it },
-            label = { Text("Значение 1") },
+            label = { Text(label1) },
             singleLine = true
         )
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
             value = value2,
             onValueChange = { value2 = it },
-            label = { Text("Значение 2") },
+            label = { Text(label2) },
             singleLine = true
         )
         Spacer(Modifier.height(16.dp))
@@ -87,12 +99,17 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
             val v2 = value2.toDoubleOrNull()
             val variantNum = variant.toIntOrNull()
 
+            // Проверка корректности ввода
             if (v1 == null || v2 == null) {
                 result = "Введите корректные числа"
                 return@Button
             }
+            if (v1 <= 0.0 || v2 <= 0.0) {
+                result = "Значения должны быть больше нуля"
+                return@Button
+            }
 
-            // Оператор when — основная тема лабораторной работы
+            // Основной выбор формулы через when
             result = when (variantNum) {
                 1 -> "S = ${v1 * v2}"          // S = a * h
                 2 -> "S = ${(v1 * v2) / 2}"    // S = (d1 * d2) / 2
