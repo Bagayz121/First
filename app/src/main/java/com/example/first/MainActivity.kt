@@ -16,6 +16,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +42,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun RhombusScreen(modifier: Modifier = Modifier) {
+    var variant by remember { mutableStateOf("") }
+    var value1 by remember { mutableStateOf("") }
+    var value2 by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -52,33 +61,42 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = variant,
+            onValueChange = { variant = it },
             label = { Text("Номер варианта (1 или 2)") },
             singleLine = true
         )
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = value1,
+            onValueChange = { value1 = it },
             label = { Text("Значение 1") },
             singleLine = true
         )
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = value2,
+            onValueChange = { value2 = it },
             label = { Text("Значение 2") },
             singleLine = true
         )
         Spacer(Modifier.height(16.dp))
 
-        Button(onClick = { }) {
+        Button(onClick = {
+            val a = value1.toDoubleOrNull()
+            val h = value2.toDoubleOrNull()
+            if (a != null && h != null) {
+                val s = a * h
+                result = "S = $s"
+            } else {
+                result = "Введите корректные числа"
+            }
+        }) {
             Text("Вычислить")
         }
 
         Spacer(Modifier.height(16.dp))
-        Text(text = "Результат:")
+        Text(text = "Результат: $result")
     }
 }
 
