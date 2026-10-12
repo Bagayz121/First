@@ -89,14 +89,14 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
 
             if (v1 == null || v2 == null) {
                 result = "Введите корректные числа"
-            } else if (variantNum == 1) {
-                // S = a * h
-                result = "S = ${v1 * v2}"
-            } else if (variantNum == 2) {
-                // S = (d1 * d2) / 2
-                result = "S = ${(v1 * v2) / 2}"
-            } else {
-                result = "Неверный номер варианта"
+                return@Button
+            }
+
+            // Оператор when — основная тема лабораторной работы
+            result = when (variantNum) {
+                1 -> "S = ${v1 * v2}"          // S = a * h
+                2 -> "S = ${(v1 * v2) / 2}"    // S = (d1 * d2) / 2
+                else -> "Неверный номер варианта"
             }
         }) {
             Text("Вычислить")
