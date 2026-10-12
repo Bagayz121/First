@@ -83,13 +83,20 @@ fun RhombusScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
 
         Button(onClick = {
-            val a = value1.toDoubleOrNull()
-            val h = value2.toDoubleOrNull()
-            if (a != null && h != null) {
-                val s = a * h
-                result = "S = $s"
-            } else {
+            val v1 = value1.toDoubleOrNull()
+            val v2 = value2.toDoubleOrNull()
+            val variantNum = variant.toIntOrNull()
+
+            if (v1 == null || v2 == null) {
                 result = "Введите корректные числа"
+            } else if (variantNum == 1) {
+                // S = a * h
+                result = "S = ${v1 * v2}"
+            } else if (variantNum == 2) {
+                // S = (d1 * d2) / 2
+                result = "S = ${(v1 * v2) / 2}"
+            } else {
+                result = "Неверный номер варианта"
             }
         }) {
             Text("Вычислить")
